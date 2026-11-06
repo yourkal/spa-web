@@ -1,0 +1,290 @@
+/* ==========================================================================
+   F55 MEN RELAXATION & MASSAGE CENTER
+   Ultra-Luxury Black & Gold Theme (Inspired by Official Spa Menu Poster)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap');
+
+:root {
+  --font-serif: 'Cinzel', 'Playfair Display', serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  
+  /* Luxury Dark Palette from Poster */
+  --bg-app: #090a0d;
+  --bg-card: #13161f;
+  --bg-card-alt: #171b26;
+  --bg-header: rgba(12, 14, 19, 0.88);
+  --bg-elevated: #1d212f;
+
+  /* Metallic Gold Palette */
+  --gold-primary: #d4af37;
+  --gold-light: #f7e29a;
+  --gold-champagne: #faedd0;
+  --gold-dark: #9e7924;
+  --gold-border: rgba(212, 175, 55, 0.28);
+  --gold-border-subtle: rgba(212, 175, 55, 0.16);
+  --gold-glow: rgba(212, 175, 55, 0.25);
+
+  /* Text Colors from Poster */
+  --text-primary: #f5f0e6;
+  --text-heading: #faedd0;
+  --text-gold: #e5c158;
+  --text-muted: #a39c8e;
+  --text-dim: #716c62;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-serif-luxury {
+  font-family: var(--font-serif);
+  letter-spacing: 0.05em;
+}
+
+/* Glassmorphism Dark Header & Panels */
+.glass-header {
+  background: var(--bg-header);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--gold-border-subtle);
+}
+
+.glass-panel-dark {
+  background: rgba(19, 22, 31, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--gold-border);
+}
+
+/* Luxury Poster Card Styling */
+.poster-card {
+  background: var(--bg-card);
+  border: 1px solid var(--gold-border);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.poster-card:hover {
+  border-color: rgba(212, 175, 55, 0.5);
+  box-shadow: 0 10px 30px -10px rgba(212, 175, 55, 0.18), 0 0 20px rgba(212, 175, 55, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Gold Gradient Effects */
+.gold-gradient-text {
+  background: linear-gradient(135deg, #fceda8 0%, #d4af37 50%, #9e7924 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-gradient-bg {
+  background: linear-gradient(135deg, #f1db8b 0%, #d4af37 50%, #a47d25 100%);
+  color: #0b0c10;
+}
+
+.gold-gradient-bg:hover {
+  background: linear-gradient(135deg, #fae7a0 0%, #dfba45 50%, #b58b2c 100%);
+}
+
+.gold-outline-btn {
+  border: 1px solid var(--gold-border);
+  color: var(--gold-light);
+  background: rgba(212, 175, 55, 0.06);
+  transition: all 0.25s ease;
+}
+
+.gold-outline-btn:hover {
+  border-color: var(--gold-primary);
+  background: rgba(212, 175, 55, 0.16);
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.25);
+}
+
+/* Ornate Poster Frame & Divider */
+.poster-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  position: relative;
+}
+
+.poster-divider::before,
+.poster-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.4), transparent);
+}
+
+.poster-ornament {
+  width: 8px;
+  height: 8px;
+  background: var(--gold-primary);
+  transform: rotate(45deg);
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+}
+
+/* Custom Scrollbar for Dark Aesthetic */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #090a0d;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a251b;
+  border-radius: 9999px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d4af37;
+}
+
+/* Custom Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulseGold {
+  0%, 100% { box-shadow: 0 0 10px rgba(212, 175, 55, 0.3); }
+  50% { box-shadow: 0 0 25px rgba(212, 175, 55, 0.6); }
+}
+
+@keyframes timerGlow {
+  0%, 100% { box-shadow: 0 0 15px rgba(239, 68, 68, 0.3); }
+  50% { box-shadow: 0 0 25px rgba(239, 68, 68, 0.6); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-pulse-gold {
+  animation: pulseGold 2s infinite ease-in-out;
+}
+
+.timer-warning-glow {
+  animation: timerGlow 1.5s infinite ease-in-out;
+}
+
+/* Status Badges */
+.badge-ready {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.badge-busy {
+  background-color: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.badge-off {
+  background-color: rgba(107, 114, 128, 0.18);
+  color: #9ca3af;
+  border: 1px solid rgba(107, 114, 128, 0.3);
+}
+
+.badge-not-ready {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.badge-confirmed {
+  background-color: rgba(212, 175, 55, 0.18);
+  color: #f5df8b;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+}
+
+.badge-completed {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.badge-cancelled {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.badge-vip {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.25) 0%, rgba(164, 125, 37, 0.2) 100%);
+  color: #faedd0;
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.15);
+}
+
+/* Hide inactive section containers */
+.view-section {
+  display: none;
+}
+.view-section.active {
+  display: block;
+}
+
+/* Interactive Card Hover */
+.spa-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--gold-border-subtle);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.spa-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold-border);
+  box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.6), 0 0 18px rgba(212, 175, 55, 0.12);
+}
+
+/* Dark Form Controls */
+.dark-input {
+  background-color: #161924;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  color: #f5f0e6;
+  transition: all 0.2s ease;
+}
+
+.dark-input:focus {
+  background-color: #1a1e2c;
+  border-color: #d4af37;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+}
+
+/* Custom Scroll Lock for Modal */
+body.modal-open {
+  overflow: hidden;
+}
+
+/* Print view */
+@media print {
+  body {
+    background: #FFF !important;
+    color: #000 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+}

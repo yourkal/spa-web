@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>F55 Men Relaxation & Massage Center - Luxury Spa Portal</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: {
+              300: '#fceda8',
+              400: '#f1db8b',
+              500: '#d4af37',
+              600: '#b58b2c',
+              700: '#8e6d24'
+            },
+            luxury: {
+              bg: '#090a0d',
+              card: '#13161f',
+              cardAlt: '#171b26',
+              elevated: '#1e2230',
+              border: 'rgba(212, 175, 55, 0.25)',
+              gold: '#d4af37'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="h-full bg-[#090a0d] text-[#f5f0e6] antialiased flex flex-col font-sans">
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"
+    class="fixed top-5 right-5 z-50 flex flex-col space-y-3 pointer-events-none max-w-sm w-full px-4"></div>
+
+  <!-- AUTH LAYOUT -->
+  <div id="auth-layout" class="hidden min-h-screen bg-[#090a0d]">
+    <div id="auth-view-container" class="min-h-screen"></div>
+  </div>
+
+  <!-- CUSTOMER LAYOUT -->
+  <div id="customer-layout" class="min-h-screen flex flex-col pb-20 md:pb-0 bg-[#090a0d]">
+    <!-- Top Glassmorphism Navigation Bar -->
+    <header class="sticky top-0 z-40 glass-header border-b border-[#d4af37]/25 shadow-xl">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+
+        <!-- F55 Crest Logo from Poster -->
+        <div class="flex items-center gap-3 cursor-pointer group" onclick="navigateTo('dashboard')">
+          <div class="w-12 h-12 rounded-2xl border border-[#d4af37]/60 overflow-hidden flex items-center justify-center shadow-lg shadow-[#d4af37]/10 group-hover:border-[#d4af37] transition-all">
+            <img src="images/logo.png" alt="F55 Logo" class="w-full h-full object-cover">
+          </div>
+          <div>
+            <span class="font-extrabold text-[#faedd0] text-lg tracking-widest block leading-tight font-serif-luxury">F55</span>
+            <span class="text-[9px] text-[#d4af37] font-bold tracking-widest uppercase block">MEN RELAXATION & MASSAGE CENTER</span>
+          </div>
+        </div>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden lg:flex items-center gap-1 bg-[#13161f]/80 p-1.5 rounded-2xl border border-[#d4af37]/20 shadow-inner text-xs font-semibold">
+          <a href="#dashboard" data-nav-target="dashboard"
+            class="px-3.5 py-2 rounded-xl transition-all text-[#a39c8e] hover:text-[#faedd0] hover:bg-[#1a1d29] flex items-center gap-1.5">
+            <i data-lucide="home" class="w-4 h-4"></i> Home
+          </a>
+          <a href="#services" data-nav-target="services"
+            class="px-3.5 py-2 rounded-xl transition-all text-[#a39c8e] hover:text-[#faedd0] hover:bg-[#1a1d29] flex items-center gap-1.5">
+            <i data-lucide="sparkles" class="w-4 h-4 text-[#d4af37]"></i> Menu Massage
+          </a>
+          <a href="#booking" data-nav-target="booking"
+            class="px-3.5 py-2 rounded-xl transition-all text-[#a39c8e] hover:text-[#faedd0] hover:bg-[#1a1d29] flex items-center gap-1.5">
+            <i data-lucide="calendar-plus" class="w-4 h-4"></i> Booking
+          </a>
+          <a href="#bookings" data-nav-target="bookings"
+            class="px-3.5 py-2 rounded-xl transition-all text-[#a39c8e] hover:text-[#faedd0] hover:bg-[#1a1d29] flex items-center gap-1.5">
+            <i data-lucide="history" class="w-4 h-4"></i> Riwayat
+          </a>
+          <a href="#biodata" data-nav-target="biodata"
+            class="px-3.5 py-2 rounded-xl transition-all text-[#a39c8e] hover:text-[#faedd0] hover:bg-[#1a1d29] flex items-center gap-1.5">
+            <i data-lucide="contact" class="w-4 h-4 text-[#d4af37]"></i> Biodata
+          </a>
+          <a href="#profile" data-nav-target="profile"
+            class="px-3.5 py-2 rounded-xl transition-all text-[#a39c8e] hover:text-[#faedd0] hover:bg-[#1a1d29] flex items-center gap-1.5">
+            <i data-lucide="user" class="w-4 h-4"></i> Profil
+          </a>
+        </nav>
+
+        <!-- Right Controls: Currency Toggle & Role Switcher -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          
+          <!-- Currency Switcher Toggle (AED / IDR) -->
+          <button onclick="toggleCurrency()" id="currency-toggle-btn"
+            title="Klik untuk ganti mata uang"
+            class="px-2.5 py-1.5 rounded-xl bg-[#13161f] border border-[#d4af37]/30 text-xs font-bold text-[#d4af37] hover:bg-[#1c202c] transition-all flex items-center gap-1.5 shadow-sm">
+            <i data-lucide="coins" class="w-3.5 h-3.5"></i>
+            <span id="currency-label">AED</span>
+          </button>
+
+          <!-- Role Selector Switcher -->
+          <div class="relative">
+            <button onclick="toggleRoleDropdown()"
+              class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#1a1d28] border border-[#d4af37]/40 text-xs font-bold text-[#faedd0] hover:border-[#d4af37] transition-all shadow-md">
+              <span id="current-role-badge" class="flex items-center gap-1.5">
+                <i data-lucide="shield" class="w-3.5 h-3.5 text-[#d4af37]"></i>
+                <span class="hidden sm:inline">Role:</span>
+                <span id="active-role-text" class="text-[#fceda8]">Customer</span>
+              </span>
+              <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-[#d4af37]"></i>
+            </button>
+
+            <!-- Role Dropdown Menu -->
+            <div id="role-dropdown"
+              class="hidden absolute right-0 mt-2 w-56 bg-[#13161f] rounded-2xl border border-[#d4af37]/40 shadow-2xl p-2 space-y-1 z-50 animate-fade-in">
+              <div class="px-3 py-1.5 text-[10px] uppercase font-bold text-[#a39c8e] tracking-wider border-b border-[#d4af37]/15">
+                Pilih Akses / Role:
+              </div>
+              <button onclick="switchRoleTo('admin')"
+                class="w-full text-left px-3 py-2 rounded-xl text-xs font-bold hover:bg-[#1e2230] text-[#f5f0e6] flex items-center gap-2.5 transition-colors">
+                <div class="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                  <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                </div>
+                <div>
+                  <span class="block">Admin</span>
+                  <span class="text-[10px] text-[#a39c8e] block font-normal">Akses penuh operasional</span>
+                </div>
+              </button>
+              <button onclick="switchRoleTo('bos')"
+                class="w-full text-left px-3 py-2 rounded-xl text-xs font-bold hover:bg-[#1e2230] text-[#faedd0] flex items-center gap-2.5 transition-colors">
+                <div class="w-6 h-6 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center">
+                  <i data-lucide="crown" class="w-3.5 h-3.5"></i>
+                </div>
+                <div>
+                  <span class="block text-[#fceda8]">Bos / Owner</span>
+                  <span class="text-[10px] text-[#d4af37] block font-normal">Lihat Dashboard saja</span>
+                </div>
+              </button>
+              <button onclick="switchRoleTo('customer')"
+                class="w-full text-left px-3 py-2 rounded-xl text-xs font-bold hover:bg-[#1e2230] text-[#f5f0e6] flex items-center gap-2.5 transition-colors">
+                <div class="w-6 h-6 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center">
+                  <i data-lucide="user" class="w-3.5 h-3.5"></i>
+                </div>
+                <div>
+                  <span class="block">Customer</span>
+                  <span class="text-[10px] text-[#a39c8e] block font-normal">Booking & reservasi spa</span>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Notification Dropdown Toggle -->
+          <div class="relative">
+            <button onclick="toggleNotificationDropdown()"
+              class="p-2 rounded-xl bg-[#13161f] border border-[#d4af37]/30 text-[#faedd0] hover:bg-[#1c202c] relative shadow-sm">
+              <i data-lucide="bell" class="w-4 h-4 text-[#d4af37]"></i>
+              <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div id="notif-dropdown"
+              class="hidden absolute right-0 mt-2 w-80 bg-[#13161f] rounded-2xl border border-[#d4af37]/40 shadow-2xl p-4 space-y-3 z-50 animate-fade-in">
+              <div class="flex items-center justify-between border-b border-[#d4af37]/20 pb-2">
+                <span class="font-bold text-xs text-[#faedd0]">Notifikasi Terbaru</span>
+                <button
+                  onclick="window.spaStore.markNotificationsRead(); this.closest('#notif-dropdown').classList.add('hidden')"
+                  class="text-[10px] text-[#d4af37] font-bold hover:underline">Tandai Dibaca</button>
+              </div>
+              <div class="space-y-2 text-xs max-h-60 overflow-y-auto" id="notif-list-container">
+                <div class="p-2.5 bg-[#1a1d29] rounded-xl border border-[#d4af37]/20 space-y-0.5">
+                  <strong class="text-[#fceda8] block font-bold">Booking Baru Dikonfirmasi</strong>
+                  <p class="text-[#a39c8e] text-[11px]">Balinese Massage (60 Min) siap dilayani.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Switch to Admin / Bos Quick Action Button -->
+          <button onclick="quickSwitchAdminOrBos()"
+            class="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-xl gold-gradient-bg font-black text-xs shadow-lg transition-all hover:scale-105">
+            <i data-lucide="layout-dashboard" class="w-3.5 h-3.5 text-black"></i>
+            <span class="text-black font-extrabold">Portal Dashboard</span>
+          </button>
+
+          <!-- User Avatar Pill -->
+          <div class="flex items-center gap-2 p-1 pl-2.5 bg-[#13161f] border border-[#d4af37]/30 rounded-2xl shadow-sm cursor-pointer hover:border-[#d4af37]"
+            onclick="navigateTo('profile')">
+            <span class="text-xs font-bold text-[#faedd0] hidden sm:inline" id="header-user-name">Haikal</span>
+            <img id="header-user-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250"
+              class="w-7 h-7 rounded-xl object-cover border border-[#d4af37]/40">
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Customer Main Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div id="customer-view-container"></div>
+    </main>
+
+    <!-- Customer Mobile Bottom Navigation Bar -->
+    <div
+      class="lg:hidden fixed bottom-0 left-0 right-0 bg-[#0d0f14]/95 backdrop-blur-md border-t border-[#d4af37]/30 z-40 px-3 py-2 flex justify-around items-center text-[10px] font-bold text-[#a39c8e]">
+      <button onclick="navigateTo('dashboard')" class="flex flex-col items-center gap-1 text-[#d4af37]">
+        <i data-lucide="home" class="w-5 h-5"></i>
+        <span>Home</span>
+      </button>
+      <button onclick="navigateTo('services')" class="flex flex-col items-center gap-1">
+        <i data-lucide="sparkles" class="w-5 h-5"></i>
+        <span>Layanan</span>
+      </button>
+      <button onclick="navigateTo('booking')"
+        class="flex flex-col items-center gap-1 text-black gold-gradient-bg p-2.5 rounded-full -mt-5 shadow-lg border border-[#d4af37]">
+        <i data-lucide="calendar-plus" class="w-5 h-5"></i>
+      </button>
+      <button onclick="navigateTo('biodata')" class="flex flex-col items-center gap-1">
+        <i data-lucide="contact" class="w-5 h-5"></i>
+        <span>Biodata</span>
+      </button>
+      <button onclick="quickSwitchAdminOrBos()" class="flex flex-col items-center gap-1 text-[#fceda8]">
+        <i data-lucide="shield" class="w-5 h-5"></i>
+        <span>Dashboard</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ADMIN & BOS LAYOUT -->
+  <div id="admin-layout" class="hidden min-h-screen flex bg-[#090a0d] relative">
+    
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div id="admin-sidebar-overlay" onclick="toggleAdminSidebar(false)"
+      class="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 hidden md:hidden transition-opacity duration-300 opacity-0 pointer-events-none"></div>
+
+    <!-- Admin / Bos Sidebar -->
+    <aside id="admin-sidebar"
+      class="w-64 bg-[#0d0f15] text-[#f5f0e6] border-r border-[#d4af37]/25 flex flex-col justify-between shrink-0 shadow-2xl fixed md:sticky top-0 h-screen z-50 transition-transform duration-300 ease-in-out -translate-x-full md:translate-x-0">
+      <div class="p-5 space-y-6 overflow-y-auto">
+        <!-- Logo & Mobile Close -->
+        <div class="flex items-center justify-between pb-4 border-b border-[#d4af37]/20">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl border border-[#d4af37] overflow-hidden flex items-center justify-center shadow-lg">
+              <img src="images/logo.png" alt="F55 Logo" class="w-full h-full object-cover">
+            </div>
+            <div>
+              <h2 class="font-extrabold text-[#faedd0] text-sm tracking-widest font-serif-luxury">F55 CENTER</h2>
+              <span id="sidebar-role-tag" class="text-[9px] text-[#d4af37] font-bold uppercase tracking-widest block">ADMIN PORTAL</span>
+            </div>
+          </div>
+          <button onclick="toggleAdminSidebar(false)" class="md:hidden p-2 text-[#a39c8e] hover:text-white rounded-xl hover:bg-[#1a1d29] transition-colors">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- Role Badge Banner (If in Bos Mode) -->
+        <div id="bos-sidebar-banner" class="hidden p-3 bg-gradient-to-r from-amber-500/20 to-[#d4af37]/10 rounded-2xl border border-amber-500/40 space-y-1">
+          <div class="flex items-center gap-1.5 text-xs font-bold text-[#fceda8]">
+            <i data-lucide="crown" class="w-4 h-4 text-amber-400"></i>
+            <span>Role: Bos (Owner)</span>
+          </div>
+          <p class="text-[10px] text-[#a39c8e]">Mode pemantauan analitik. Akses hanya melihat dashboard & laporan bisnis.</p>
+        </div>
+
+        <!-- Navigation Groups -->
+        <nav class="space-y-5 text-xs font-semibold" id="admin-sidebar-nav">
+          <!-- Main -->
+          <div class="space-y-1">
+            <span class="text-[10px] font-extrabold text-[#d4af37]/70 uppercase tracking-widest block px-3">Main</span>
+            <a href="#admin-dashboard" data-nav-target="admin-dashboard" onclick="toggleAdminSidebar(false)"
+              class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#1a1e2c] transition-colors text-[#faedd0]">
+              <i data-lucide="layout-dashboard" class="w-4 h-4 text-[#d4af37]"></i> Dashboard Eksekutif
+            </a>
+          </div>
+
+          <!-- Operasional (Hidden or restricted for Bos) -->
+          <div class="space-y-1" id="nav-group-operations">
+            <span class="text-[10px] font-extrabold text-[#d4af37]/70 uppercase tracking-widest block px-3">Operations</span>
+            <a href="#admin-bookings" data-nav-target="admin-bookings" onclick="toggleAdminSidebar(false)"
+              class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#1a1e2c] transition-colors text-[#a39c8e]">
+              <i data-lucide="calendar" class="w-4 h-4 text-[#d4af37]"></i> Bookings & Reservasi
+            </a>
+            <a href="#admin-sessions" data-nav-target="admin-sessions" onclick="toggleAdminSidebar(false)"
+              class="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-[#1a1e2c] transition-colors text-[#a39c8e]">
+              <div class="flex items-center gap-3">
+                <i data-lucide="clock" class="w-4 h-4 text-[#d4af37]"></i> Sesi Aktif
+              </div>
+              <span class="px-2 py-0.5 rounded-full bg-amber-500/20 text-[#fceda8] text-[9px] font-bold border border-amber-500/40 animate-pulse">LIVE</span>
+            </a>
+            <a href="#admin-biodata" data-nav-target="admin-biodata" onclick="toggleAdminSidebar(false)"
+              class="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-[#1a1e2c] transition-colors text-[#a39c8e]">
+              <div class="flex items-center gap-3">
+                <i data-lucide="contact" class="w-4 h-4 text-[#d4af37]"></i> Biodata Pelanggan
+              </div>
+              <span class="px-1.5 py-0.2 bg-[#d4af37]/20 text-[#faedd0] text-[9px] rounded font-bold">Nama & No HP</span>
+            </a>
+            <a href="#admin-therapists" data-nav-target="admin-therapists" onclick="toggleAdminSidebar(false)"
+              class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#1a1e2c] transition-colors text-[#a39c8e]">
+              <i data-lucide="user-check" class="w-4 h-4 text-[#d4af37]"></i> Terapis Spa
+            </a>
+          </div>
+
+          <!-- Keuangan & Manajemen -->
+          <div class="space-y-1">
+            <span class="text-[10px] font-extrabold text-[#d4af37]/70 uppercase tracking-widest block px-3">Keuangan & Sistem</span>
+            <a href="#admin-services" data-nav-target="admin-services" onclick="toggleAdminSidebar(false)" id="nav-link-services"
+              class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#1a1e2c] transition-colors text-[#a39c8e]">
+              <i data-lucide="sparkles" class="w-4 h-4 text-[#d4af37]"></i> Menu Layanan F55
+            </a>
+            <a href="#admin-expenses" data-nav-target="admin-expenses" onclick="toggleAdminSidebar(false)"
+              class="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-[#1a1e2c] transition-colors text-[#a39c8e]">
+              <div class="flex items-center gap-3">
+                <i data-lucide="trending-down" class="w-4 h-4 text-rose-400"></i> Fitur Pengeluaran
+              </div>
+              <span class="px-1.5 py-0.2 bg-rose-500/20 text-rose-300 text-[9px] rounded font-bold">Baru</span>
+            </a>
+            <a href="#admin-transactions" data-nav-target="admin-transactions" onclick="toggleAdminSidebar(false)"
+              class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#1a1e2c] transition-colors text-[#a39c8e]">
+              <i data-lucide="receipt" class="w-4 h-4 text-[#d4af37]"></i> Pembukuan & Grafik Total
+            </a>
+            <a href="#admin-reports" data-nav-target="admin-reports" onclick="toggleAdminSidebar(false)"
+              class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#1a1e2c] transition-colors text-[#a39c8e]">
+              <i data-lucide="bar-chart-3" class="w-4 h-4 text-[#d4af37]"></i> Laporan & Omset
+            </a>
+            <a href="#admin-settings" data-nav-target="admin-settings" onclick="toggleAdminSidebar(false)" id="nav-link-settings"
+              class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#1a1e2c] transition-colors text-[#a39c8e]">
+              <i data-lucide="settings" class="w-4 h-4 text-[#d4af37]"></i> Pengaturan
+            </a>
+          </div>
+        </nav>
+      </div>
+
+      <!-- Bottom Profile & Switcher -->
+      <div class="p-4 border-t border-[#d4af37]/20 bg-[#090a0d] space-y-3">
+        <button onclick="toggleAdminSidebar(false); navigateTo('dashboard')"
+          class="w-full py-2 bg-[#13161f] hover:bg-[#1a1e2c] text-[#faedd0] border border-[#d4af37]/30 font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition-all">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+          <span>Ke Halaman Customer</span>
+        </button>
+
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <img id="sidebar-user-avatar" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=250"
+              class="w-9 h-9 rounded-xl object-cover border border-[#d4af37]/50">
+            <div class="truncate text-xs">
+              <strong id="sidebar-user-name" class="text-white block font-bold truncate">Administrator</strong>
+              <span id="sidebar-user-role" class="text-[#d4af37] text-[10px] block">Super Admin</span>
+            </div>
+          </div>
+          <!-- Role Switch Icon Button -->
+          <button onclick="toggleRoleDropdown()" title="Ganti Role" class="p-1.5 text-[#d4af37] hover:text-white rounded-lg hover:bg-[#1a1d28]">
+            <i data-lucide="repeat" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Admin & Bos Main Body -->
+    <div class="flex-1 flex flex-col min-w-0 overflow-x-hidden">
+      <!-- Admin Top Header Bar -->
+      <header
+        class="bg-[#0c0e14]/90 backdrop-blur-md border-b border-[#d4af37]/25 px-4 sm:px-6 py-4 flex items-center justify-between gap-4 sticky top-0 z-30 shadow-md">
+        <div class="flex items-center gap-3">
+          <button onclick="toggleAdminSidebar(true)" class="md:hidden p-2 text-[#faedd0] bg-[#161924] border border-[#d4af37]/30 rounded-xl transition-colors flex items-center gap-1.5 font-bold text-xs">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+            <span class="text-[11px] font-bold">Menu</span>
+          </button>
+          <div>
+            <h2 id="admin-header-title" class="font-extrabold text-[#faedd0] text-base sm:text-lg font-serif-luxury">Dashboard Operasional F55</h2>
+            <p id="admin-header-subtitle" class="text-[11px] text-[#a39c8e]">Pusat data relaksasi & manajemen massage Dubai</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <!-- Currency Toggle Button -->
+          <button onclick="toggleCurrency()"
+            class="px-3 py-1.5 rounded-xl bg-[#13161f] border border-[#d4af37]/40 text-xs font-bold text-[#d4af37] hover:bg-[#1a1d29] flex items-center gap-1.5 shadow-sm">
+            <i data-lucide="coins" class="w-3.5 h-3.5"></i>
+            <span class="currency-tag">AED</span>
+          </button>
+
+          <!-- Role Pill Switcher in Admin Header -->
+          <div class="hidden sm:flex items-center bg-[#13161f] p-1 rounded-xl border border-[#d4af37]/30 text-xs font-bold">
+            <button onclick="switchRoleTo('admin')" id="role-btn-admin" class="px-2.5 py-1 rounded-lg text-emerald-400 hover:bg-[#1a1e2c]">Admin</button>
+            <button onclick="switchRoleTo('bos')" id="role-btn-bos" class="px-2.5 py-1 rounded-lg text-amber-300 hover:bg-[#1a1e2c]">👑 Bos (Owner)</button>
+          </div>
+
+          <button onclick="navigateTo('dashboard')"
+            class="px-3 py-1.5 bg-[#171b26] text-[#faedd0] font-bold text-xs rounded-xl border border-[#d4af37]/30 hover:border-[#d4af37] transition-colors flex items-center gap-1.5">
+            <span class="hidden sm:inline">Customer App</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-[#d4af37]"></i>
+          </button>
+          <div class="hidden md:flex items-center gap-2 pl-3 border-l border-[#d4af37]/20 text-xs">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+            <span class="font-bold text-[#34d399]">Live Online</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Admin / Bos View Container -->
+      <main class="p-4 sm:p-6 md:p-8 flex-1 max-w-7xl w-full mx-auto">
+        <div id="admin-view-container"></div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    function toggleNotificationDropdown() {
+      const drop = document.getElementById('notif-dropdown');
+      if (drop) drop.classList.toggle('hidden');
+    }
+
+    function toggleRoleDropdown() {
+      const drop = document.getElementById('role-dropdown');
+      if (drop) drop.classList.toggle('hidden');
+    }
+
+    function toggleAdminSidebar(show) {
+      const sidebar = document.getElementById('admin-sidebar');
+      const overlay = document.getElementById('admin-sidebar-overlay');
+      if (!sidebar || !overlay) return;
+
+      const isOpen = show !== undefined ? show : sidebar.classList.contains('-translate-x-full');
+
+      if (isOpen) {
+        sidebar.classList.remove('-translate-x-full');
+        overlay.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
+        overlay.classList.add('opacity-100', 'pointer-events-auto');
+      } else {
+        sidebar.classList.add('-translate-x-full');
+        overlay.classList.remove('opacity-100', 'pointer-events-auto');
+        overlay.classList.add('opacity-0', 'pointer-events-none');
+        setTimeout(() => {
+          overlay.classList.add('hidden');
+        }, 200);
+      }
+    }
+    window.toggleAdminSidebar = toggleAdminSidebar;
+
+    // Currency Switcher
+    function toggleCurrency() {
+      if (window.spaStore) {
+        const newMode = window.spaStore.toggleCurrencyMode();
+        const labels = document.querySelectorAll('#currency-label, .currency-tag');
+        labels.forEach(el => el.textContent = newMode);
+        if (window.showToast) window.showToast(`Mata uang diubah ke: ${newMode}`, 'success');
+        if (window.renderCurrentRoute) window.renderCurrentRoute();
+      }
+    }
+    window.toggleCurrency = toggleCurrency;
+
+    // Role Switcher
+    function switchRoleTo(role) {
+      const drop = document.getElementById('role-dropdown');
+      if (drop) drop.classList.add('hidden');
+
+      if (!window.spaStore) return;
+      window.spaStore.setActiveRole(role);
+
+      updateRoleUI(role);
+
+      if (role === 'bos') {
+        window.spaStore.state.currentUser = window.spaStore.state.bosUser;
+        if (window.showToast) window.showToast('👑 Mode Bos diaktifkan: Memantau Dashboard & Laporan', 'success');
+        navigateTo('admin-dashboard');
+      } else if (role === 'admin') {
+        window.spaStore.state.currentUser = window.spaStore.state.adminUser;
+        if (window.showToast) window.showToast('🛠️ Mode Admin Operasional diaktifkan', 'success');
+        navigateTo('admin-dashboard');
+      } else {
+        window.spaStore.state.currentUser = INITIAL_DATA.currentUser;
+        if (window.showToast) window.showToast('👤 Masuk sebagai Customer', 'success');
+        navigateTo('dashboard');
+      }
+    }
+    window.switchRoleTo = switchRoleTo;
+
+    function quickSwitchAdminOrBos() {
+      const currentRole = window.spaStore ? window.spaStore.getActiveRole() : 'admin';
+      if (currentRole === 'bos') {
+        navigateTo('admin-dashboard');
+      } else {
+        navigateTo('admin-dashboard');
+      }
+    }
+    window.quickSwitchAdminOrBos = quickSwitchAdminOrBos;
+
+    function updateRoleUI(role) {
+      const roleText = document.getElementById('active-role-text');
+      const sidebarTag = document.getElementById('sidebar-role-tag');
+      const bosBanner = document.getElementById('bos-sidebar-banner');
+      const opsNav = document.getElementById('nav-group-operations');
+      const linkServices = document.getElementById('nav-link-services');
+      const linkSettings = document.getElementById('nav-link-settings');
+      const sidebarAvatar = document.getElementById('sidebar-user-avatar');
+      const sidebarName = document.getElementById('sidebar-user-name');
+      const sidebarRole = document.getElementById('sidebar-user-role');
+      const headerTitle = document.getElementById('admin-header-title');
+      const roleBtnAdmin = document.getElementById('role-btn-admin');
+      const roleBtnBos = document.getElementById('role-btn-bos');
+
+      if (role === 'bos') {
+        if (roleText) roleText.textContent = 'Bos (Owner)';
+        if (sidebarTag) sidebarTag.textContent = 'EXECUTIVE OWNER';
+        if (bosBanner) bosBanner.classList.remove('hidden');
+        if (headerTitle) headerTitle.textContent = 'Dashboard Pemilik (Bos F55)';
+        if (sidebarAvatar) sidebarAvatar.src = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=250';
+        if (sidebarName) sidebarName.textContent = 'Mr. David Hendra';
+        if (sidebarRole) sidebarRole.textContent = 'Bos / Owner';
+        if (roleBtnBos) {
+          roleBtnBos.classList.add('bg-amber-500/20', 'text-amber-400');
+          if (roleBtnAdmin) roleBtnAdmin.classList.remove('bg-emerald-500/20');
+        }
+      } else if (role === 'admin') {
+        if (roleText) roleText.textContent = 'Admin';
+        if (sidebarTag) sidebarTag.textContent = 'ADMIN PORTAL';
+        if (bosBanner) bosBanner.classList.add('hidden');
+        if (headerTitle) headerTitle.textContent = 'Dashboard Operasional F55';
+        if (sidebarAvatar) sidebarAvatar.src = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=250';
+        if (sidebarName) sidebarName.textContent = 'Administrator';
+        if (sidebarRole) sidebarRole.textContent = 'Super Admin';
+        if (roleBtnAdmin) {
+          roleBtnAdmin.classList.add('bg-emerald-500/20', 'text-emerald-400');
+          if (roleBtnBos) roleBtnBos.classList.remove('bg-amber-500/20');
+        }
+      } else {
+        if (roleText) roleText.textContent = 'Customer';
+      }
+    }
+    window.updateRoleUI = updateRoleUI;
+  </script>
+
+  <!-- JS Dependencies -->
+  <script src="js/data.js"></script>
+  <script src="js/timer.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>
