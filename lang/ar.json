@@ -868,5 +868,17 @@
     "Sudah Dibooking": "محجوز",
     "Terapis ini sudah dibooking atau sedang tidak tersedia. Silakan pilih terapis yang berstatus Ready.": "هذا المعالج محجوز بالفعل أو غير متاح حالياً. يرجى اختيار معالج متاح بحالة جاهز (Ready).",
     "Zona Waktu: Dubai (GST)": "المنطقة الزمنية: دبي (GST)",
-    "Zona Waktu: Jakarta (WIB)": "المنطقة الزمنية: جاكرتا (WIB)"
+    "Zona Waktu: Jakarta (WIB)": "المنطقة الزمنية: جاكرتا (WIB)",
+    "Mulai Sesi": "بدء الجلسة",
+    "Mulai Sesi Sekarang": "ابدأ الجلسة الآن",
+    "Sesi Siap Dimulai (Manual)": "الجلسة جاهزة للبدء (يدوياً)",
+    "Sesi untuk booking :code (:customer) belum dimulai. Klik tombol \"Mulai Sesi Sekarang\" saat customer sudah masuk ke ruangan perawatan.": "لم تبدأ الجلسة للحجز :code (:customer) بعد. انقر فوق \"ابدأ الجلسة الآن\" بمجرد دخول العميل إلى غرفة العلاج.",
+    "Timer otomatis berjalan saat status diubah ke In Progress": "المؤقت يبدأ تلقائياً عند تغيير الحالة إلى قيد التنفيذ",
+    "Mulai Sesi Perawatan?": "بدء جلسة العلاج؟",
+    "Status akan diubah ke <b>IN PROGRESS</b> dan timer otomatis mulai berjalan sesuai durasi booking.": "سيتم تغيير الحالة إلى <b>قيد التنفيذ</b> وسيبدأ المؤقت في العمل لمدة الحجز.",
+    "Pastikan customer sudah masuk ke ruangan perawatan.": "تأكد من دخول العميل إلى غرفة العلاج.",
+    "Ya, Mulai Sesi": "نعم، ابدأ الجلسة",
+    "Est. Selesai": "الانتهاء المتوقع",
+    "Klik untuk membuka sesi dan mulai timer saat customer masuk ruangan": "انقر لفتح الجلسة وبدء المؤقت عند دخول العميل إلى الغرفة",
+    "Jadwal booking: :time (:date). Sesi & timer dapat dimulai manual saat customer tiba.": "موعد الحجز: :time (:date). يمكن بدء الجلسة والمؤقت يدوياً عند وصول العميل."
 }

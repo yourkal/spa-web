@@ -20,37 +20,21 @@ class AdminSessionController extends Controller
 
             if ($booking) {
                 if ($booking->status === 'confirmed') {
-                    $isFuture = false;
-                    if ($booking->booking_date && $booking->booking_time) {
-                        try {
-                            $scheduledAt = \Illuminate\Support\Carbon::parse($booking->booking_date->format('Y-m-d') . ' ' . $booking->booking_time);
-                            $isFuture = now()->lt($scheduledAt);
-                        } catch (\Exception $e) {}
-                    }
-
-                    if ($isFuture) {
-                        $targetBookingInfo = [
-                            'status'    => 'not_started',
-                            'is_future' => true,
-                            'code'      => $booking->booking_code,
-                            'message'   => __('Booking :code (:customer) dijadwalkan pada :date jam :time. Sesi & timer belum dapat dimulai sebelum jam kedatangan tiba.', [
-                                'code'     => $booking->booking_code,
-                                'customer' => $booking->customer_name,
-                                'date'     => $booking->booking_date->format('d M Y'),
-                                'time'     => $booking->booking_time,
-                            ]),
-                        ];
-                    } else {
-                        $targetBookingInfo = [
-                            'status'    => 'not_started',
-                            'is_future' => false,
-                            'code'      => $booking->booking_code,
-                            'message'   => __('Sesi untuk booking :code (:customer) belum aktif. Silakan ubah status booking ke "In Progress" pada menu Kelola Reservasi untuk memulai sesi & timer.', [
-                                'code'     => $booking->booking_code,
-                                'customer' => $booking->customer_name,
-                            ]),
-                        ];
-                    }
+                    $targetBookingInfo = [
+                        'status'     => 'not_started',
+                        'code'       => $booking->booking_code,
+                        'booking_id' => $booking->id,
+                        'customer'   => $booking->customer_name,
+                        'service'    => $booking->service_name,
+                        'therapist'  => $booking->therapist_name,
+                        'duration'   => $booking->duration,
+                        'time'       => $booking->booking_time,
+                        'date'       => $booking->booking_date ? $booking->booking_date->format('d M Y') : '',
+                        'message'    => __('Sesi untuk booking :code (:customer) belum dimulai. Klik tombol "Mulai Sesi Sekarang" saat customer sudah masuk ke ruangan perawatan.', [
+                            'code'     => $booking->booking_code,
+                            'customer' => $booking->customer_name,
+                        ]),
+                    ];
                 } elseif ($booking->status === 'completed') {
                     $targetBookingInfo = [
                         'status'  => 'completed',

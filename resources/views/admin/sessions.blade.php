@@ -55,32 +55,52 @@
         </a>
       </div>
     @elseif($targetBookingInfo['status'] === 'not_started')
-      @if(!empty($targetBookingInfo['is_future']))
-        <div class="p-4 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs font-bold bg-neutral-900 border border-amber-500/40 text-amber-200">
-          <div class="flex items-start sm:items-center gap-2.5">
-            <i data-lucide="lock" class="w-5 h-5 text-amber-400 shrink-0 mt-0.5 sm:mt-0"></i>
-            <div>
-              <span class="inline-block px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-black uppercase tracking-wider mb-1">
-                {{ __('Jadwal Belum Tiba') }}
+      <div class="p-4 sm:p-5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs font-bold shadow-lg"
+           style="background:linear-gradient(135deg,#1c1900,#141414);border:1.5px solid #D4AF3780;">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+               style="background:#D4AF3720;border:1px solid #D4AF3760;color:#D4AF37;">
+            <i data-lucide="play" class="w-5 h-5 text-amber-400"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 mb-1 flex-wrap">
+              <span class="inline-block px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider"
+                    style="background:#D4AF3720;color:#F5DF93;border:1px solid #D4AF3740;">
+                ✨ {{ __('Sesi Siap Dimulai (Manual)') }}
               </span>
-              <p class="text-xs text-gray-200">{{ $targetBookingInfo['message'] }}</p>
+              @if(!empty($targetBookingInfo['time']))
+                <span class="text-[10px] text-gray-400 font-normal">
+                  {{ __('Jadwal') }}: <strong class="text-white">{{ $targetBookingInfo['date'] }} • {{ $targetBookingInfo['time'] }}</strong>
+                </span>
+              @endif
             </div>
+            <p class="text-xs text-gray-200">
+              {{ $targetBookingInfo['message'] }}
+            </p>
+            <span class="text-[11px] text-gray-400 font-normal block mt-1">
+              {{ __('Durasi Perawatan') }}: <strong class="text-white">{{ $targetBookingInfo['duration'] }} {{ __('Menit') }}</strong> • {{ __('Timer otomatis berjalan saat status diubah ke In Progress') }}
+            </span>
           </div>
-          <a href="{{ (Auth::user()->role === 'bos' ? route('bos.bookings', ['search' => $targetBookingInfo['code']]) : route('admin.bookings', ['search' => $targetBookingInfo['code']])) }}" class="px-3 py-1.5 rounded-xl text-xs font-black bg-amber-500 text-black shrink-0 hover:bg-amber-400 transition-all self-end sm:self-auto">
-            {{ __('Buka Kelola Reservasi') }}
-          </a>
         </div>
-      @else
-        <div class="p-4 rounded-2xl flex items-center justify-between gap-3 text-xs font-bold bg-amber-950/40 border border-amber-500/40 text-amber-300">
-          <div class="flex items-center gap-2.5">
-            <i data-lucide="alert-circle" class="w-5 h-5 text-amber-400 shrink-0"></i>
-            <span>{{ $targetBookingInfo['message'] }}</span>
-          </div>
+
+        @if(Auth::user()->role === 'admin' && !empty($targetBookingInfo['booking_id']))
+          <form action="{{ route('admin.bookings.status', $targetBookingInfo['booking_id']) }}" method="POST" class="shrink-0 self-end sm:self-auto">
+            @csrf
+            @method('PATCH')
+            <input type="hidden" name="status" value="in_progress">
+            <button type="submit"
+                    class="px-4 py-2.5 rounded-xl font-black text-xs shadow-md transition-all flex items-center gap-2 hover:scale-105 cursor-pointer"
+                    style="background:linear-gradient(90deg,#D4AF37,#B8960C);color:#111;">
+              <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+              <span>{{ __('Mulai Sesi Sekarang') }}</span>
+            </button>
+          </form>
+        @else
           <a href="{{ (Auth::user()->role === 'bos' ? route('bos.bookings', ['search' => $targetBookingInfo['code']]) : route('admin.bookings', ['search' => $targetBookingInfo['code']])) }}" class="px-3 py-1.5 rounded-xl text-xs font-black bg-amber-500 text-black shrink-0 hover:bg-amber-400 transition-all">
             {{ __('Buka Kelola Reservasi') }}
           </a>
-        </div>
-      @endif
+        @endif
+      </div>
     @elseif($targetBookingInfo['status'] === 'completed')
       <div class="p-4 rounded-2xl flex items-center justify-between gap-3 text-xs font-bold bg-emerald-950/40 border border-emerald-500/40 text-emerald-300">
         <div class="flex items-center gap-2.5">
@@ -146,8 +166,10 @@
           <p class="text-xs text-gray-400">
             {{ __('Layanan Spa') }}: <strong class="text-white">{{ $ses->service_name }}</strong>
           </p>
-          <p class="text-xs text-gray-500">
-            {{ __('Therapist') }}: <strong class="text-gray-300">{{ $ses->therapist_name }}</strong> • {{ __('Jam Booking') }}: <strong class="text-gray-300">{{ $ses->booking->booking_time ?? '-' }}</strong>
+          <p class="text-xs text-gray-400">
+            {{ __('Therapist') }}: <strong class="text-gray-200">{{ $ses->therapist_name }}</strong> •
+            {{ __('Mulai') }}: <strong class="text-emerald-400">{{ $ses->started_at ? $ses->started_at->format('H:i') : '-' }}</strong> •
+            {{ __('Est. Selesai') }}: <strong class="text-amber-300">{{ $ses->started_at ? $ses->started_at->copy()->addMinutes($ses->total_duration_minutes)->format('H:i') : '-' }}</strong>
           </p>
         </div>
       </div>

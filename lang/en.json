@@ -868,5 +868,17 @@
     "Sudah Dibooking": "Booked",
     "Terapis ini sudah dibooking atau sedang tidak tersedia. Silakan pilih terapis yang berstatus Ready.": "This therapist is already booked or currently unavailable. Please select an available therapist with Ready status.",
     "Zona Waktu: Dubai (GST)": "Timezone: Dubai (GST)",
-    "Zona Waktu: Jakarta (WIB)": "Timezone: Jakarta (WIB)"
+    "Zona Waktu: Jakarta (WIB)": "Timezone: Jakarta (WIB)",
+    "Mulai Sesi": "Start Session",
+    "Mulai Sesi Sekarang": "Start Session Now",
+    "Sesi Siap Dimulai (Manual)": "Session Ready to Start (Manual)",
+    "Sesi untuk booking :code (:customer) belum dimulai. Klik tombol \"Mulai Sesi Sekarang\" saat customer sudah masuk ke ruangan perawatan.": "Session for booking :code (:customer) has not started yet. Click \"Start Session Now\" once the customer enters the treatment room.",
+    "Timer otomatis berjalan saat status diubah ke In Progress": "Timer runs automatically when status is changed to In Progress",
+    "Mulai Sesi Perawatan?": "Start Treatment Session?",
+    "Status akan diubah ke <b>IN PROGRESS</b> dan timer otomatis mulai berjalan sesuai durasi booking.": "Status will change to <b>IN PROGRESS</b> and timer will start running for the booking duration.",
+    "Pastikan customer sudah masuk ke ruangan perawatan.": "Make sure the customer has entered the treatment room.",
+    "Ya, Mulai Sesi": "Yes, Start Session",
+    "Est. Selesai": "Est. Finish",
+    "Klik untuk membuka sesi dan mulai timer saat customer masuk ruangan": "Click to open session and start timer when customer enters the room",
+    "Jadwal booking: :time (:date). Sesi & timer dapat dimulai manual saat customer tiba.": "Booking schedule: :time (:date). Session & timer can be started manually when customer arrives."
 }

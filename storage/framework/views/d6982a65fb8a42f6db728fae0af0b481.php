@@ -55,35 +55,56 @@
         </a>
       </div>
     <?php elseif($targetBookingInfo['status'] === 'not_started'): ?>
-      <?php if(!empty($targetBookingInfo['is_future'])): ?>
-        <div class="p-4 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs font-bold bg-neutral-900 border border-amber-500/40 text-amber-200">
-          <div class="flex items-start sm:items-center gap-2.5">
-            <i data-lucide="lock" class="w-5 h-5 text-amber-400 shrink-0 mt-0.5 sm:mt-0"></i>
-            <div>
-              <span class="inline-block px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-black uppercase tracking-wider mb-1">
-                <?php echo e(__('Jadwal Belum Tiba')); ?>
+      <div class="p-4 sm:p-5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs font-bold shadow-lg"
+           style="background:linear-gradient(135deg,#1c1900,#141414);border:1.5px solid #D4AF3780;">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+               style="background:#D4AF3720;border:1px solid #D4AF3760;color:#D4AF37;">
+            <i data-lucide="play" class="w-5 h-5 text-amber-400"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 mb-1 flex-wrap">
+              <span class="inline-block px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider"
+                    style="background:#D4AF3720;color:#F5DF93;border:1px solid #D4AF3740;">
+                ✨ <?php echo e(__('Sesi Siap Dimulai (Manual)')); ?>
 
               </span>
-              <p class="text-xs text-gray-200"><?php echo e($targetBookingInfo['message']); ?></p>
+              <?php if(!empty($targetBookingInfo['time'])): ?>
+                <span class="text-[10px] text-gray-400 font-normal">
+                  <?php echo e(__('Jadwal')); ?>: <strong class="text-white"><?php echo e($targetBookingInfo['date']); ?> • <?php echo e($targetBookingInfo['time']); ?></strong>
+                </span>
+              <?php endif; ?>
             </div>
-          </div>
-          <a href="<?php echo e((Auth::user()->role === 'bos' ? route('bos.bookings', ['search' => $targetBookingInfo['code']]) : route('admin.bookings', ['search' => $targetBookingInfo['code']]))); ?>" class="px-3 py-1.5 rounded-xl text-xs font-black bg-amber-500 text-black shrink-0 hover:bg-amber-400 transition-all self-end sm:self-auto">
-            <?php echo e(__('Buka Kelola Reservasi')); ?>
+            <p class="text-xs text-gray-200">
+              <?php echo e($targetBookingInfo['message']); ?>
 
-          </a>
-        </div>
-      <?php else: ?>
-        <div class="p-4 rounded-2xl flex items-center justify-between gap-3 text-xs font-bold bg-amber-950/40 border border-amber-500/40 text-amber-300">
-          <div class="flex items-center gap-2.5">
-            <i data-lucide="alert-circle" class="w-5 h-5 text-amber-400 shrink-0"></i>
-            <span><?php echo e($targetBookingInfo['message']); ?></span>
+            </p>
+            <span class="text-[11px] text-gray-400 font-normal block mt-1">
+              <?php echo e(__('Durasi Perawatan')); ?>: <strong class="text-white"><?php echo e($targetBookingInfo['duration']); ?> <?php echo e(__('Menit')); ?></strong> • <?php echo e(__('Timer otomatis berjalan saat status diubah ke In Progress')); ?>
+
+            </span>
           </div>
+        </div>
+
+        <?php if(Auth::user()->role === 'admin' && !empty($targetBookingInfo['booking_id'])): ?>
+          <form action="<?php echo e(route('admin.bookings.status', $targetBookingInfo['booking_id'])); ?>" method="POST" class="shrink-0 self-end sm:self-auto">
+            <?php echo csrf_field(); ?>
+            <?php echo method_field('PATCH'); ?>
+            <input type="hidden" name="status" value="in_progress">
+            <button type="submit"
+                    class="px-4 py-2.5 rounded-xl font-black text-xs shadow-md transition-all flex items-center gap-2 hover:scale-105 cursor-pointer"
+                    style="background:linear-gradient(90deg,#D4AF37,#B8960C);color:#111;">
+              <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+              <span><?php echo e(__('Mulai Sesi Sekarang')); ?></span>
+            </button>
+          </form>
+        <?php else: ?>
           <a href="<?php echo e((Auth::user()->role === 'bos' ? route('bos.bookings', ['search' => $targetBookingInfo['code']]) : route('admin.bookings', ['search' => $targetBookingInfo['code']]))); ?>" class="px-3 py-1.5 rounded-xl text-xs font-black bg-amber-500 text-black shrink-0 hover:bg-amber-400 transition-all">
             <?php echo e(__('Buka Kelola Reservasi')); ?>
 
           </a>
-        </div>
-      <?php endif; ?>
+        <?php endif; ?>
+      </div>
     <?php elseif($targetBookingInfo['status'] === 'completed'): ?>
       <div class="p-4 rounded-2xl flex items-center justify-between gap-3 text-xs font-bold bg-emerald-950/40 border border-emerald-500/40 text-emerald-300">
         <div class="flex items-center gap-2.5">
@@ -153,8 +174,10 @@
           <p class="text-xs text-gray-400">
             <?php echo e(__('Layanan Spa')); ?>: <strong class="text-white"><?php echo e($ses->service_name); ?></strong>
           </p>
-          <p class="text-xs text-gray-500">
-            <?php echo e(__('Therapist')); ?>: <strong class="text-gray-300"><?php echo e($ses->therapist_name); ?></strong> • <?php echo e(__('Jam Booking')); ?>: <strong class="text-gray-300"><?php echo e($ses->booking->booking_time ?? '-'); ?></strong>
+          <p class="text-xs text-gray-400">
+            <?php echo e(__('Therapist')); ?>: <strong class="text-gray-200"><?php echo e($ses->therapist_name); ?></strong> •
+            <?php echo e(__('Mulai')); ?>: <strong class="text-emerald-400"><?php echo e($ses->started_at ? $ses->started_at->format('H:i') : '-'); ?></strong> •
+            <?php echo e(__('Est. Selesai')); ?>: <strong class="text-amber-300"><?php echo e($ses->started_at ? $ses->started_at->copy()->addMinutes($ses->total_duration_minutes)->format('H:i') : '-'); ?></strong>
           </p>
         </div>
       </div>

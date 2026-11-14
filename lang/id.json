@@ -868,5 +868,17 @@
     "Sudah Dibooking": "Sudah Dibooking",
     "Terapis ini sudah dibooking atau sedang tidak tersedia. Silakan pilih terapis yang berstatus Ready.": "Terapis ini sudah dibooking atau sedang tidak tersedia. Silakan pilih terapis yang berstatus Ready.",
     "Zona Waktu: Dubai (GST)": "Zona Waktu: Dubai (GST)",
-    "Zona Waktu: Jakarta (WIB)": "Zona Waktu: Jakarta (WIB)"
+    "Zona Waktu: Jakarta (WIB)": "Zona Waktu: Jakarta (WIB)",
+    "Mulai Sesi": "Mulai Sesi",
+    "Mulai Sesi Sekarang": "Mulai Sesi Sekarang",
+    "Sesi Siap Dimulai (Manual)": "Sesi Siap Dimulai (Manual)",
+    "Sesi untuk booking :code (:customer) belum dimulai. Klik tombol \"Mulai Sesi Sekarang\" saat customer sudah masuk ke ruangan perawatan.": "Sesi untuk booking :code (:customer) belum dimulai. Klik tombol \"Mulai Sesi Sekarang\" saat customer sudah masuk ke ruangan perawatan.",
+    "Timer otomatis berjalan saat status diubah ke In Progress": "Timer otomatis berjalan saat status diubah ke In Progress",
+    "Mulai Sesi Perawatan?": "Mulai Sesi Perawatan?",
+    "Status akan diubah ke <b>IN PROGRESS</b> dan timer otomatis mulai berjalan sesuai durasi booking.": "Status akan diubah ke <b>IN PROGRESS</b> dan timer otomatis mulai berjalan sesuai durasi booking.",
+    "Pastikan customer sudah masuk ke ruangan perawatan.": "Pastikan customer sudah masuk ke ruangan perawatan.",
+    "Ya, Mulai Sesi": "Ya, Mulai Sesi",
+    "Est. Selesai": "Est. Selesai",
+    "Klik untuk membuka sesi dan mulai timer saat customer masuk ruangan": "Klik untuk membuka sesi dan mulai timer saat customer masuk ruangan",
+    "Jadwal booking: :time (:date). Sesi & timer dapat dimulai manual saat customer tiba.": "Jadwal booking: :time (:date). Sesi & timer dapat dimulai manual saat customer tiba."
 }

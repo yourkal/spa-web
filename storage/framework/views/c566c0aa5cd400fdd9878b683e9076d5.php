@@ -147,8 +147,8 @@
                 <span><?php echo e($b->booking_date->format('d M Y')); ?> - <?php echo e($b->booking_time); ?></span>
                 <?php if($isFuture && $b->status === 'confirmed'): ?>
                   <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[8px] font-black bg-amber-500/20 text-amber-300 border border-amber-500/40"
-                        title="<?php echo e(__('Jadwal booking belum tiba. Aksi dan timer terkunci sebelum jam ini.')); ?>">
-                    <i data-lucide="lock" class="w-2.5 h-2.5"></i>
+                        title="<?php echo e(__('Jadwal booking: :time (:date). Sesi & timer dapat dimulai manual saat customer tiba.', ['time' => $b->booking_time, 'date' => $b->booking_date->format('d M Y')])); ?>">
+                    <i data-lucide="clock" class="w-2.5 h-2.5"></i>
                     <?php echo e(__('Belum Jamnya')); ?>
 
                   </span>
@@ -195,12 +195,12 @@
                           <?php else: ?> badge-cancelled
                           <?php endif; ?>">
                     <option value="confirmed" <?php echo e($b->status === 'confirmed' ? 'selected' : ''); ?>><?php echo e(__('CONFIRMED')); ?></option>
-                    <option value="in_progress" <?php echo e($b->status === 'in_progress' ? 'selected' : ''); ?> <?php echo e(($isFuture && $b->status !== 'in_progress') ? 'disabled' : ''); ?>>
-                      <?php echo e(__('IN PROGRESS')); ?><?php echo e(($isFuture && $b->status !== 'in_progress') ? ' (' . __('Terkunci') . ')' : ''); ?>
+                    <option value="in_progress" <?php echo e($b->status === 'in_progress' ? 'selected' : ''); ?>>
+                      <?php echo e(__('IN PROGRESS')); ?>
 
                     </option>
-                    <option value="completed" <?php echo e($b->status === 'completed' ? 'selected' : ''); ?> <?php echo e(($isFuture && $b->status !== 'completed') ? 'disabled' : ''); ?>>
-                      <?php echo e(__('COMPLETED')); ?><?php echo e(($isFuture && $b->status !== 'completed') ? ' (' . __('Terkunci') . ')' : ''); ?>
+                    <option value="completed" <?php echo e($b->status === 'completed' ? 'selected' : ''); ?>>
+                      <?php echo e(__('COMPLETED')); ?>
 
                     </option>
                     <option value="cancelled" <?php echo e($b->status === 'cancelled' ? 'selected' : ''); ?>><?php echo e(__('CANCELLED')); ?></option>
@@ -224,20 +224,13 @@
                   <span><?php echo e(sprintf('%02d:%02d', $m, $s)); ?></span>
                 </a>
               <?php elseif($b->status === 'confirmed'): ?>
-                <?php if($isFuture): ?>
-                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold text-gray-400 bg-neutral-900 border border-neutral-700 cursor-not-allowed"
-                        title="<?php echo e(__('Booking dijadwalkan pukul :time. Timer belum dapat dimulai.', ['time' => $b->booking_time])); ?>">
-                    <i data-lucide="lock" class="w-3 h-3 text-amber-400"></i>
-                    <span><?php echo e(__('Terkunci')); ?> (<?php echo e($b->booking_time); ?>)</span>
-                  </span>
-                <?php else: ?>
-                  <a href="<?php echo e((Auth::user()->role === 'bos' ? route('bos.sessions') : route('admin.sessions'))); ?>?booking_code=<?php echo e($b->booking_code); ?>"
-                     class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold text-amber-300 hover:text-white bg-amber-950/40 border border-amber-500/30 transition-all hover:bg-amber-900/40"
-                     title="<?php echo e(__('Sesi belum dimulai. Klik untuk cek timer')); ?>">
-                    <i data-lucide="clock" class="w-3 h-3 text-amber-400"></i>
-                    <span><?php echo e(__('Belum Aktif')); ?></span>
-                  </a>
-                <?php endif; ?>
+                <a href="<?php echo e((Auth::user()->role === 'bos' ? route('bos.sessions') : route('admin.sessions'))); ?>?booking_code=<?php echo e($b->booking_code); ?>"
+                   class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black tracking-wider uppercase transition-all shadow-sm hover:scale-105"
+                   style="background:#1a1a1a;border:1px solid #10B98160;color:#34D399;"
+                   title="<?php echo e(__('Klik untuk membuka sesi dan mulai timer saat customer masuk ruangan')); ?>">
+                  <i data-lucide="play" class="w-3 h-3 text-emerald-400"></i>
+                  <span><?php echo e(__('Mulai Sesi')); ?></span>
+                </a>
               <?php elseif($b->status === 'completed'): ?>
                 <a href="<?php echo e((Auth::user()->role === 'bos' ? route('bos.sessions') : route('admin.sessions'))); ?>?booking_code=<?php echo e($b->booking_code); ?>"
                    class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold text-emerald-400 bg-emerald-950/30 border border-emerald-500/20 hover:bg-emerald-900/30 transition-all"

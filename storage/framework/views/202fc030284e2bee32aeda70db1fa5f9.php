@@ -575,18 +575,27 @@
         return;
       }
 
-      // Kunci jadwal masa depan: jika jam booking belum tiba, aksi tidak bisa diubah kecuali cancelled
-      var isActuallyFuture = scheduledAt ? (new Date() < new Date(scheduledAt)) : isFuture;
-      if (newStatus !== 'cancelled' && isActuallyFuture) {
+      // Konfirmasi mulai sesi perawatan secara manual saat customer masuk ruangan
+      if (newStatus === 'in_progress' && currentStatus !== 'in_progress') {
         selectEl.value = currentStatus;
         Swal.fire({
-          icon: 'warning',
-          title: <?php echo json_encode(__('Belum Waktunya'), 15, 512) ?>,
-          html: <?php echo json_encode(__('Booking ini dijadwalkan pada'), 15, 512) ?> + ' <b>' + scheduledDate + ' ' + scheduledTime + '</b>.<br><span class="text-xs text-gray-400 mt-2 block">' + <?php echo json_encode(__('Aksi tidak dapat diubah (kecuali Cancel) sebelum jam booking tiba.'), 15, 512) ?> + '</span>',
+          title: <?php echo json_encode(__('Mulai Sesi Perawatan?'), 15, 512) ?>,
+          html: <?php echo json_encode(__('Status akan diubah ke <b>IN PROGRESS</b> dan timer otomatis mulai berjalan sesuai durasi booking.'), 15, 512) ?> + '<br><span class="text-xs text-amber-300 mt-2 block">' + <?php echo json_encode(__('Pastikan customer sudah masuk ke ruangan perawatan.'), 15, 512) ?> + '</span>',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#D4AF37',
+          cancelButtonColor: '#374151',
+          confirmButtonText: '<span style="color:#111;font-weight:900">' + <?php echo json_encode(__('Ya, Mulai Sesi'), 512) ?> + '</span>',
+          cancelButtonText: <?php echo json_encode(__('Batal'), 15, 512) ?>,
           background: '#1a1a1a',
           color: '#e5e7eb',
-          confirmButtonColor: '#D4AF37',
-          confirmButtonText: '<span style="color:#111;font-weight:900">OK</span>',
+        }).then(function(result) {
+          if (result.isConfirmed) {
+            selectEl.value = 'in_progress';
+            form.submit();
+          } else {
+            selectEl.value = currentStatus;
+          }
         });
         return;
       }

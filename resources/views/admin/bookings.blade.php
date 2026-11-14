@@ -145,8 +145,8 @@
                 <span>{{ $b->booking_date->format('d M Y') }} - {{ $b->booking_time }}</span>
                 @if($isFuture && $b->status === 'confirmed')
                   <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[8px] font-black bg-amber-500/20 text-amber-300 border border-amber-500/40"
-                        title="{{ __('Jadwal booking belum tiba. Aksi dan timer terkunci sebelum jam ini.') }}">
-                    <i data-lucide="lock" class="w-2.5 h-2.5"></i>
+                        title="{{ __('Jadwal booking: :time (:date). Sesi & timer dapat dimulai manual saat customer tiba.', ['time' => $b->booking_time, 'date' => $b->booking_date->format('d M Y')]) }}">
+                    <i data-lucide="clock" class="w-2.5 h-2.5"></i>
                     {{ __('Belum Jamnya') }}
                   </span>
                 @endif
@@ -192,11 +192,11 @@
                           @else badge-cancelled
                           @endif">
                     <option value="confirmed" {{ $b->status === 'confirmed' ? 'selected' : '' }}>{{ __('CONFIRMED') }}</option>
-                    <option value="in_progress" {{ $b->status === 'in_progress' ? 'selected' : '' }} {{ ($isFuture && $b->status !== 'in_progress') ? 'disabled' : '' }}>
-                      {{ __('IN PROGRESS') }}{{ ($isFuture && $b->status !== 'in_progress') ? ' (' . __('Terkunci') . ')' : '' }}
+                    <option value="in_progress" {{ $b->status === 'in_progress' ? 'selected' : '' }}>
+                      {{ __('IN PROGRESS') }}
                     </option>
-                    <option value="completed" {{ $b->status === 'completed' ? 'selected' : '' }} {{ ($isFuture && $b->status !== 'completed') ? 'disabled' : '' }}>
-                      {{ __('COMPLETED') }}{{ ($isFuture && $b->status !== 'completed') ? ' (' . __('Terkunci') . ')' : '' }}
+                    <option value="completed" {{ $b->status === 'completed' ? 'selected' : '' }}>
+                      {{ __('COMPLETED') }}
                     </option>
                     <option value="cancelled" {{ $b->status === 'cancelled' ? 'selected' : '' }}>{{ __('CANCELLED') }}</option>
                   </select>
@@ -219,20 +219,13 @@
                   <span>{{ sprintf('%02d:%02d', $m, $s) }}</span>
                 </a>
               @elseif($b->status === 'confirmed')
-                @if($isFuture)
-                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold text-gray-400 bg-neutral-900 border border-neutral-700 cursor-not-allowed"
-                        title="{{ __('Booking dijadwalkan pukul :time. Timer belum dapat dimulai.', ['time' => $b->booking_time]) }}">
-                    <i data-lucide="lock" class="w-3 h-3 text-amber-400"></i>
-                    <span>{{ __('Terkunci') }} ({{ $b->booking_time }})</span>
-                  </span>
-                @else
-                  <a href="{{ (Auth::user()->role === 'bos' ? route('bos.sessions') : route('admin.sessions')) }}?booking_code={{ $b->booking_code }}"
-                     class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold text-amber-300 hover:text-white bg-amber-950/40 border border-amber-500/30 transition-all hover:bg-amber-900/40"
-                     title="{{ __('Sesi belum dimulai. Klik untuk cek timer') }}">
-                    <i data-lucide="clock" class="w-3 h-3 text-amber-400"></i>
-                    <span>{{ __('Belum Aktif') }}</span>
-                  </a>
-                @endif
+                <a href="{{ (Auth::user()->role === 'bos' ? route('bos.sessions') : route('admin.sessions')) }}?booking_code={{ $b->booking_code }}"
+                   class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black tracking-wider uppercase transition-all shadow-sm hover:scale-105"
+                   style="background:#1a1a1a;border:1px solid #10B98160;color:#34D399;"
+                   title="{{ __('Klik untuk membuka sesi dan mulai timer saat customer masuk ruangan') }}">
+                  <i data-lucide="play" class="w-3 h-3 text-emerald-400"></i>
+                  <span>{{ __('Mulai Sesi') }}</span>
+                </a>
               @elseif($b->status === 'completed')
                 <a href="{{ (Auth::user()->role === 'bos' ? route('bos.sessions') : route('admin.sessions')) }}?booking_code={{ $b->booking_code }}"
                    class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold text-emerald-400 bg-emerald-950/30 border border-emerald-500/20 hover:bg-emerald-900/30 transition-all"
