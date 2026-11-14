@@ -1,0 +1,19 @@
+DirectoryIndex public/index.php index.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # 1. Keamanan: Blokir akses ke file sensitif
+    RewriteRule ^(\.env|\.git|composer\.(json|lock)|package\.(json|lock)|artisan|phpunit\.xml) - [F,L,NC]
+    RewriteRule ^storage/logs/ - [F,L,NC]
+    
+    # Blokir akses langsung ke file source code .php (namun TIDAK memblokir URL rute seperti /app/dashboard)
+    RewriteRule ^(app|bootstrap|config|database|resources|routes|tests)/.*\.php$ - [F,L,NC]
+
+    # 2. Redirect root langsung ke public/index.php
+    RewriteRule ^$ public/index.php [L]
+
+    # 3. Arahkan semua request lainnya ke public/ (Laravel Front Controller)
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
